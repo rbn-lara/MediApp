@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MediApp.ViewModels"
+             xmlns:models="clr-namespace:MediApp.Models"
+             x:Class="MediApp.Views.AppointmentPage"
+             Title="Citas">
+    <ContentPage.BindingContext>
+        <viewmodels:AppointmentViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <Label Text="Agende una cita"
+                   FontSize="Title"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   Grid.Row="0"
+                   TextColor="{StaticResource Cuaternary}"/>
+            <Label Text="Escoja un servicio"
+                   FontSize="Subtitle"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="1"
+                   TextColor="Gray"/>
+            <RefreshView x:Name="RfrshView"
+                         Grid.Row="2"
+                         IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                         Command="{Binding RefreshCommand}"
+                         RefreshColor="Aquamarine">
+                <CollectionView x:Name="Collection"
+                            ItemsLayout="VerticalList"
+                            ItemsSource="{Binding MedicalServices}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding Service}">
+                    <CollectionView.EmptyView>
+                        <Button 
+                                Text="Toque aquí para ver los servicios disponibles"
+                                TextColor="Black"
+                                BackgroundColor="LightGray"
+                                Command="{Binding GetTableCommand}"/>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:MedicalService">
+                            <Grid Padding="10, 5" >
+                                <Frame HasShadow="True">
+                                    <Label Text="{Binding Name}" FontSize="Body" VerticalOptions="Center"/>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="15"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Label 
+                       Text="Fecha de Cita"
+                       FontSize="Small"
+                        HorizontalTextAlignment="Center"
+                       Grid.Column="0" Grid.Row="0"
+                       VerticalTextAlignment="Center" />
+                <DatePicker 
+                        Grid.Column="1" Grid.Row="0"
+                        HorizontalOptions="Fill"
+                        MinimumDate="{Binding Hoy}"
+                        Date="{Binding Fecha, Mode=OneWayToSource}"/>
+                <Label 
+                       Text="Hora de Cita"
+                       FontSize="Small"
+                       HorizontalTextAlignment="Center"
+                       Grid.Column="0" Grid.Row="1"
+                       VerticalTextAlignment="Center" />
+                <TimePicker 
+                        Time="{Binding Hora, Mode=OneWayToSource}"
+                        Grid.Column="1" Grid.Row="1"
+                        HorizontalOptions="Fill"
+                        TextColor="Black"/>
+                <Label Text="Solo horas exactas"
+                       FontSize="Caption"
+                       Grid.Column="1" Grid.Row="2"/>
+            </Grid>
+            <Button Text="Agendar Cita"
+                    Margin="20"
+                    CornerRadius="50"
+                    Grid.Row="4"
+                    Command="{Binding AddAppointment}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

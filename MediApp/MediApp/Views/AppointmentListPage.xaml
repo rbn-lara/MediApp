@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MediApp.ViewModels"
+             xmlns:models="clr-namespace:MediApp.Models"
+             x:Class="MediApp.Views.AppointmentListPage"
+             Title="Citas">
+    <ContentPage.BindingContext>
+        <viewmodels:AppointmentListViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Button x:Name="btnClear" IsVisible="false" IsEnabled="false" Command="{Binding Clears}"/>
+            <RefreshView x:Name="RfrshView"
+                             IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                             Command="{Binding RefreshCommand}"
+                             RefreshColor="Aquamarine">
+                <CollectionView x:Name="Collection"
+                                ItemsLayout="VerticalList"
+                                ItemsSource="{Binding Appointments}">
+                    <CollectionView.EmptyView>
+                        <Button 
+                                    Text="Toque aquí para ver sus citas"
+                                    TextColor="Black"
+                                    BackgroundColor="LightGray"
+                                    Command="{Binding RefreshCommand}"/>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Appointment">
+                            <Grid Padding="10, 5" >
+                                <Frame HasShadow="True">
+                                    <StackLayout>
+                                        <Label Text="Usuario" FontSize="Caption" TextColor="Gray"/>
+                                        <Label Text="{Binding User}" FontSize="Body" VerticalOptions="Center"/>
+                                        <Label Text="Fecha de cita" FontSize="Caption" TextColor="Gray"/>
+                                        <Label Text="{Binding Date}" FontSize="Body" VerticalOptions="Center"/>
+                                        <Label Text="Servicio" FontSize="Caption" TextColor="Gray"/>
+                                        <Label Text="{Binding Service}" FontSize="Body" VerticalOptions="Center"/>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

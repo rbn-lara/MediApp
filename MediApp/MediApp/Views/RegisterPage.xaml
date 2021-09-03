@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MediApp.ViewModels"
+             xmlns:models="clr-namespace:MediApp.Models"
+             x:Class="MediApp.Views.RegisterPage"
+             Shell.FlyoutBehavior="Disabled"
+             Shell.BackgroundColor="{StaticResource Primary}"
+             Title="Registra tus Datos"
+             Shell.TitleColor="{StaticResource Cuaternary}">
+    <ContentPage.BindingContext>
+        <viewmodels:RegisterViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid x:Name="gridLayout" Margin="10, 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Usuario" Grid.Column="0" Grid.Row="0"
+                   VerticalTextAlignment="Center"/>
+            <Entry x:Name="userEntry"
+                   Text="{Binding Usuario}"
+                   HorizontalTextAlignment="Center"
+                   Grid.Column="1" Grid.Row="0"/>
+            <Label Text="Nombre" Grid.Column="0" Grid.Row="1"
+                   VerticalTextAlignment="Center"/>
+            <Entry x:Name="nameEntry"
+                   Text="{Binding Nombre}"
+                   HorizontalTextAlignment="Center"
+                   Grid.Column="1" Grid.Row="1"/>
+            <Label Text="Primer Apellido" Grid.Column="0" Grid.Row="2"
+                   VerticalTextAlignment="Center"/>
+            <Entry x:Name="firstLastNameEntry"
+                   Text="{Binding PrimerApellido}"
+                   HorizontalTextAlignment="Center"
+                   Grid.Column="1" Grid.Row="2"/>
+            <Label Text="Segundo Apellido" Grid.Column="0" Grid.Row="3"
+                   VerticalTextAlignment="Center"/>
+            <Entry x:Name="secondLastNameEntry"
+                   Text="{Binding SegundoApellido}"
+                   HorizontalTextAlignment="Center"
+                   Grid.Column="1" Grid.Row="3"/>
+            <Label Text="Teléfono" Grid.Column="0" Grid.Row="4"
+                   VerticalTextAlignment="Center"/>
+            <Entry x:Name="phoneEntry"
+                   Text="{Binding Telefono, Mode=OneWayToSource}"
+                   MaxLength="8"
+                   Keyboard="Telephone"
+                   HorizontalTextAlignment="Center"
+                   Grid.Column="1" Grid.Row="4"/>
+            <Label Text="Correo Electrónico" Grid.Column="0" Grid.Row="5"
+                   VerticalTextAlignment="Center"/>
+            <Entry x:Name="emailEntry"
+                   Text="{Binding Email}"
+                   HorizontalTextAlignment="Center"
+                   Grid.Column="1" Grid.Row="5"
+                   Keyboard="Email"/>
+            <Label Text="Fecha de Nacimiento" Grid.Column="0" Grid.Row="6"
+                   VerticalTextAlignment="Center" />
+            <DatePicker Grid.Column="1" Grid.Row="6"
+                        HorizontalOptions="Fill"
+                        MinimumDate="1/1/1900"
+                        MaximumDate="1/1/2004"
+                        Date="{Binding FechaNacimiento}"/>
+            <Label Text="Contraseña" Grid.Column="0" Grid.Row="7"
+                   VerticalTextAlignment="Center" />
+            <Entry x:Name="passwordEntry"
+                   Text="{Binding Password}"
+                   IsPassword="True"
+                   HorizontalTextAlignment="Center"
+                   Grid.Column="1" Grid.Row="7"/>
+            <Label Text="Verifique Contraseña" Grid.Column="0" Grid.Row="8"
+                   VerticalTextAlignment="Center"/>
+            <Entry x:Name="passwordAgainEntry"
+                   IsPassword="True"
+                   Text="{Binding PasswordAgain}"
+                   HorizontalTextAlignment="Center"
+                   Grid.Column="1" Grid.Row="8"/>
+            <Button x:Name="AddButton"
+                    Text="Registrarse"
+                    Command="{Binding AddCommand}"
+                    Margin="20"
+                    Grid.ColumnSpan="2" Grid.Row="9"
+                    CornerRadius="50"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MediApp.ViewModels"
+             x:Class="MediApp.Views.LoginPage"
+             Shell.FlyoutBehavior="Disabled"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.BindingContext>
+        <viewmodels:LoginViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Source="mediapp_logo.png" HeightRequest="150" Margin="0, 20, 0, 0"/>
+            <Image Source="mediapp_name.png" HeightRequest="100" Margin="0, 0, 0, 20"/>
+
+            <Entry Placeholder="Usuario"
+                   PlaceholderColor="Gray"
+                   x:Name="userEntry"
+                   Text="{Binding User, Mode=OneWayToSource}"
+                   TextColor="Black"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="CenterAndExpand"
+                   WidthRequest="200"
+                   BackgroundColor="WhiteSmoke"/>
+            <Entry Placeholder="Contraseña"
+                   PlaceholderColor="Gray"
+                   Text="{Binding Password, Mode=OneWayToSource}"
+                   TextColor="Black"
+                   IsPassword="True"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="CenterAndExpand"
+                   WidthRequest="200"
+                   BackgroundColor="WhiteSmoke"/>
+            <Label Text="Debe iniciar sesión para utilizar la aplicacíón"
+                   TextColor="{StaticResource Secondary}"
+                   HorizontalTextAlignment="Center"
+                   FontSize="Medium"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center"
+                   Margin="0, 0, 0, 20"/>
+            <Button x:Name="LoginButton"
+                    Text="Iniciar Sesión"
+                    Margin="80, 20"
+                    Command="{Binding LoginValid}"
+                    CornerRadius="50"/>
+            <Button x:Name="RegistrationButton"
+                    Text="Crear Cuenta"
+                    FontSize="Small"
+                    Margin="100, 10"
+                    Command="{Binding GoToRegistration}"
+                    CornerRadius="50"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

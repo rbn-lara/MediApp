@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:View="clr-namespace:MediApp.Views"
+             xmlns:viewmodels="clr-namespace:MediApp.ViewModels"
+             xmlns:model="clr-namespace:MediApp.Models"
+             x:Class="MediApp.Views.PatientDetailsPage"
+             Disappearing="ContentPage_Disappearing"
+             Title="Datos Personales">
+    <ContentPage.BindingContext>
+        <viewmodels:PatientDetailsViewModel/>
+    </ContentPage.BindingContext>
+    <RefreshView x:Name="ViewContent"
+        IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+        Command="{Binding RefreshCommand}"
+        RefreshColor="Aquamarine">
+        <StackLayout Orientation="Vertical">
+            <Button x:Name="btnClear" IsVisible="false" IsEnabled="False" Command="{Binding Clears}"/>
+            <CollectionView x:Name="MyCollectionView"
+                BackgroundColor="Transparent"
+                ItemsLayout="VerticalList"
+                ItemsSource="{Binding PatientData}">
+                <CollectionView.EmptyView>
+                    <Label Text="Actualiza para cargar tus datos" FontSize="Large" HorizontalTextAlignment="Center"/>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:PatientProperty">
+                        <Grid Padding="10" >
+                            <Frame HasShadow="True">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Name}" FontSize="Small" Margin="0, 10" VerticalOptions="Center"
+                                           WidthRequest="100"/>
+                                    <Label Text="{Binding Value}" FontSize="Body" Margin="10" VerticalOptions="Center"/>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+        </StackLayout>
+
+    </RefreshView>
+
+</ContentPage>

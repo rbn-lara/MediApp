@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MediApp.ViewModels"
+             xmlns:models="clr-namespace:MediApp.Models"
+             x:Class="MediApp.Views.MedicalServicePage"
+             Title="Servicios Médicos">
+    
+    <ContentPage.BindingContext>
+        <viewmodels:MedicalServiceViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Registre un servicio médico"
+                   FontSize="Title"
+                   TextColor="{StaticResource Secondary}"
+                   Grid.ColumnSpan="2" Grid.Row="0"
+                   HorizontalOptions="Center"
+                   Margin="5, 25"/>
+            <Label Text="Código de Servicio" Grid.Column="0" Grid.Row="1"
+                    VerticalTextAlignment="Center"/>
+            <Entry x:Name="IdEntry"
+                    Text="{Binding Id}"
+                    HorizontalTextAlignment="Center"
+                    Grid.Column="1" Grid.Row="1"
+                   Keyboard="Numeric"/>
+            <Label Text="Nombre de Servicio" Grid.Column="0" Grid.Row="2"  
+                   VerticalTextAlignment="Center"/>
+            <Entry x:Name="NameEntry"
+                   Text="{Binding Name}"
+                   HorizontalTextAlignment="Center"
+                   Grid.Column="1" Grid.Row="2"/>
+            <Button Text="Ingresar Servicio"
+                    Grid.ColumnSpan="2" Grid.Row="3"
+                    Margin="50, 20"
+                    CornerRadius="50"
+                    Command="{Binding IngresarServicio}"/>
+            <Button Text="Ver servicios existentes"
+                    Margin="75, 0"
+                    CornerRadius="50"
+                    Command="{Binding VerServicios}"
+                    Grid.ColumnSpan="2" Grid.Row="4"/>
+            <RefreshView Grid.ColumnSpan="2" Grid.Row="5"
+                         IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                         Command="{Binding RefreshCommand}"
+                         RefreshColor="Aquamarine">
+                <CollectionView x:Name="Collection"
+                            ItemsLayout="VerticalList"
+                            ItemsSource="{Binding MedicalServices}">
+                    <CollectionView.EmptyView>
+                        <Label Text="Sin datos" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:MedicalService">
+                            <Grid Padding="10" >
+                                <Frame HasShadow="True">
+                                    <StackLayout Orientation="Horizontal">
+                                        <StackLayout Orientation="Vertical">
+                                            <Label Text="Código"/>
+                                            <Label Text="{Binding Id}" FontSize="Small"
+                                               VerticalOptions="Center"
+                                               WidthRequest="100"/>
+                                        </StackLayout>
+                                        <StackLayout>
+                                            <Label Text="Nombre"/>
+                                            <Label Text="{Binding Name}" FontSize="Body" VerticalOptions="Center"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
